@@ -172,13 +172,14 @@ def testWord(Item item) {
 }
 
 def printHelp() {
-    println '[enter] - next word'
-    println 'add     - add a new word'
-    println 'delete  - delete the last word'
-    println 'correct - restore the combo streak of the last word as if it was correct'
-    println 'reset   - reset combo streak of the last word'
-    println 'help    - print this help'
-    println 'quit    - terminate the application'
+    println '''\
+    [enter] - next word
+    add     - add a new word
+    delete  - delete the last word'
+    correct - restore the combo streak of the last word as if it was correct'
+    reset   - reset combo streak of the last word'
+    help    - print this help'
+    quit    - terminate the application'''
 }
 
 def printColored(def text, Ansi.FColor color) {
