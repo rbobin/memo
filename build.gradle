@@ -1,0 +1,16 @@
+apply plugin: 'groovy'
+apply plugin: 'application'
+
+mainClassName = "memorizer.Bootstrapper"
+
+repositories {
+    mavenCentral()
+    flatDir { dirs 'lib' }
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy:2.4.3'
+    compile ':jansi:1.4'
+    compile ':JCDP:1.25'
+    compile 'commons-cli:commons-cli:1.3'
+}

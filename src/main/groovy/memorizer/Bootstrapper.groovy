@@ -8,7 +8,6 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import java.nio.file.StandardCopyOption
 
-
 config = [:]
 scanner = null
 printer = null
@@ -28,7 +27,7 @@ class Item {
 }
 
 def init() {
-    def cli = new CliBuilder(usage:'memo.groovy -[options]', header:'Options:')
+    def cli = new CliBuilder(usage: 'memo.groovy -[options]', header: 'Options:')
     cli.with {
         h longOpt: 'help', 'Show usage information'
         s longOpt: 'source', args: 1, argName: 'file', 'Use given file for words database. Default is ./file.csv'
@@ -208,7 +207,7 @@ def loadWordsbase() {
         try {
             def tokenized = line.split(';')
             items << new Item(
-                    word:        tokenized[0],
+                    word: tokenized[0],
                     translation: tokenized[1],
                     comboStreak: tokenized.size() > 2 ? Integer.parseInt(tokenized[2]) : 0)
         } catch (Exception ignored) {
@@ -242,3 +241,4 @@ init()
 loadWordsbase()
 start()
 saveWordsbase()
+
