@@ -2,6 +2,8 @@ package memorizer
 
 import print.color.Ansi
 import print.color.ColoredPrinter
+import print.color.ColoredPrinterWIN
+import org.apache.commons.lang3.SystemUtils
 
 import java.nio.file.Files
 import java.nio.file.Path
@@ -45,7 +47,10 @@ def init() {
     config.threshold = options.t ?: 10
     config.ratio = options.r ?: 0.5
 
-    printer = new ColoredPrinter.Builder(1, false).build()
+    printer = (SystemUtils.IS_OS_WINDOWS) ?
+            new ColoredPrinterWIN.Builder(1, false).build() :
+            new ColoredPrinter.Builder(1, false).build()
+
     scanner = new Scanner(System.in)
 }
 
@@ -119,9 +124,9 @@ def correct() {
     if (lastComboStreak) {
         lastWord.comboStreak = lastComboStreak
         lastComboStreak = 0
-        println "${lastWord.word} - ${lastWord.translation}: new combo streak is ${lastWord.comboStreak}"
+        println "Corrected. New combo streak is ${lastWord.comboStreak}"
     } else {
-        println "Previous word was correct, or corrected or doesn't exist"
+        println "Previous word was correct, already corrected or doesn't exist"
     }
 
 }
