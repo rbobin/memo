@@ -17,15 +17,17 @@ iterator = null
 lastWord = null
 lastComboStreak = 0
 items = [] as LinkedList
+resetCount = 5
+
+DEFAULT_TRESHOLD = 10
+DEFAULT_RATIO = 0.5
+DEFAULT_FILE_NAME = 'file.csv'
 
 class Item {
     String word
     String translation
     int comboStreak
 
-    String toCsvRow() {
-        return "$word;$translation;$comboStreak\n"
-    }
 }
 
 def init() {
@@ -43,9 +45,9 @@ def init() {
         System.exit(0)
     }
 
-    config.source = options.s ?: 'file.csv'
-    config.threshold = options.t ?: 10
-    config.ratio = options.r ?: 0.5
+    config.source = options.s ?: DEFAULT_FILE_NAME
+    config.threshold = options.t ?: DEFAULT_TRESHOLD
+    config.ratio = options.r ?: DEFAULT_RATIO
 
     printer = (SystemUtils.IS_OS_WINDOWS) ?
             new ColoredPrinterWIN.Builder(1, false).build() :
@@ -235,7 +237,12 @@ def saveWordsbase() {
     file.createNewFile()
     file.withWriter { out ->
         items.each { item ->
-            out.write item.toCsvRow()
+            if (resetCount > 0 && item.comboStreak >= config.threshold) {
+                resetCount--
+                item.comboStreak = config.threshold - 1
+            }
+
+            out.write "$item.word;$item.translation;$item.comboStreak\n"
         }
     }
     Path destinationPath = Paths.get(filePath)
